@@ -1,8 +1,8 @@
 # NetAtmo plug-in for Munin
 
 ## Dependencies
-NetAtmo Weather Station
-GoLang 1.x
+NetAtmo Weather Station  
+GoLang 1.x  
 Munin-node 2.x
 
 ## Installation
