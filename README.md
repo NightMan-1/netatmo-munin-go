@@ -6,6 +6,9 @@ GoLang 1.x
 Munin-node 2.x
 
 ## Installation
+
+Open https://dev.netatmo.com and create first application, then:
+
 ~~~sh
 go get github.com/exzz/netatmo-api-go
 go get github.com/go-ini/ini
