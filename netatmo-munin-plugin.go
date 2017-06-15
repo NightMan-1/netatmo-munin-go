@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strconv"
 	"github.com/go-ini/ini"
 	netatmo "github.com/exzz/netatmo-api-go"
 )
@@ -118,8 +119,8 @@ func main() {
 						fmt.Printf("co2.value %v\n", value)
 					//Pressure info
 					}else if (len(os.Args) == 2 && os.Args[1] == "-pressure" && dataType == "Pressure"){
-						value = float64(value) * 0.75006375541921 //mmHg
-						fmt.Printf("pressure.value %00.2f\n", value)
+						t, _ := strconv.ParseFloat(fmt.Sprintf("%f", value), 64)
+						fmt.Printf("pressure.value %00.2f\n", t * 0.75006375541921)
 					//Humidity Indor info
 					}else if (len(os.Args) == 2 && os.Args[1] == "-hum" && dataType == "Humidity"){
 						fmt.Printf("hum_indor.value %v\n", value)
