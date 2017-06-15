@@ -50,7 +50,7 @@ func main() {
 		fmt.Println("graph_title Netatmo CO2 level")
 		fmt.Println("graph_vlabel level")
 		fmt.Println("graph_category netatmo")
-		fmt.Println("co2.label level")
+		fmt.Println("co2.label ppm")
 		fmt.Println("co2.warning  1000")
 		fmt.Println("co2.critical 1500")
 		os.Exit(0)
@@ -59,19 +59,19 @@ func main() {
 		fmt.Println("graph_title Netatmo Noise level")
 		fmt.Println("graph_vlabel level")
 		fmt.Println("graph_category netatmo")
-		fmt.Println("noise.label level")
+		fmt.Println("noise.label dB")
 		os.Exit(0)
 	}
 	if (len(os.Args) == 3 && os.Args[1] == "-pressure" && os.Args[2] == "config"){
 		fmt.Println("graph_title Netatmo Pressure level")
 		fmt.Println("graph_vlabel level")
 		fmt.Println("graph_category netatmo")
-		fmt.Println("pressure.label level")
+		fmt.Println("pressure.label mmHg")
 		os.Exit(0)
 	}
 	if (len(os.Args) == 3 && os.Args[1] == "-hum" && os.Args[2] == "config"){
 		fmt.Println("graph_title Netatmo Humidity level")
-		fmt.Println("graph_vlabel level")
+		fmt.Println("graph_vlabel %")
 		fmt.Println("graph_category netatmo")
 		fmt.Println("hum_indor.label indor")
 		fmt.Println("hum_outdor.label outdor")
@@ -79,7 +79,7 @@ func main() {
 	}
 	if (len(os.Args) == 3 && os.Args[1] == "-temp" && os.Args[2] == "config"){
 		fmt.Println("graph_title Netatmo Temperature level")
-		fmt.Println("graph_vlabel level")
+		fmt.Println("graph_vlabel °C")
 		fmt.Println("graph_category netatmo")
 		fmt.Println("temp_indor.label indor")
 		fmt.Println("temp_outdor.label outdor")
