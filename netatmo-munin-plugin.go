@@ -118,7 +118,8 @@ func main() {
 						fmt.Printf("co2.value %v\n", value)
 					//Pressure info
 					}else if (len(os.Args) == 2 && os.Args[1] == "-pressure" && dataType == "Pressure"){
-						fmt.Printf("pressure.value %v\n", value)
+						value = float64(value) * 0.75006375541921 //mmHg
+						fmt.Printf("pressure.value %00.2f\n", value)
 					//Humidity Indor info
 					}else if (len(os.Args) == 2 && os.Args[1] == "-hum" && dataType == "Humidity"){
 						fmt.Printf("hum_indor.value %v\n", value)
