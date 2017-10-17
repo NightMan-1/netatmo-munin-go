@@ -1,4 +1,4 @@
-# NetAtmo plug-in for Munin
+# NetAtmo plug-in for Munin v2.0
 
 ## Dependencies
 NetAtmo Weather Station  

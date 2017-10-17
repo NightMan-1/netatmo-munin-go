@@ -17,15 +17,7 @@ strip ./netatmo-munin-plugin
 
 echo "Configuration ..."
 cp netatmo-munin-plugin /usr/share/munin/plugins
-
-
-SENSORS=( "co2" "temp" "hum" "noise" "pressure" )
-for i in ${SENSORS[@]}; do
-    echo -e "#!/bin/sh\n\n/usr/share/munin/plugins/netatmo-munin-plugin -${i} \$1" >/usr/share/munin/plugins/netatmo-munin-${i}.sh
-    chmod +x /usr/share/munin/plugins/netatmo-munin-${i}.sh
-    ln -s -f /usr/share/munin/plugins/netatmo-munin-${i}.sh /etc/munin/plugins/netatmo-munin-${i}.sh
-done
-
+ln -s -f /usr/share/munin/plugins/netatmo-munin-plugin /etc/munin/plugins/netatmo-munin-plugin
 
 if [ ! -f /etc/munin/netatmo.cfg ]; then
     echo "#go https://dev.netatmo.com" >/etc/munin/netatmo.cfg
@@ -34,5 +26,3 @@ if [ ! -f /etc/munin/netatmo.cfg ]; then
 fi
 
 echo All done! Now run "service munin-node restart" and restart munin
-
-
