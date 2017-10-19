@@ -4,7 +4,7 @@ Features:
 
   - graphics for wind direction
   - enable/disable any graphics
-  - net NetAtmo API source
+  - new NetAtmo API source
 
 
 ## 2.0 (October 17, 2017)
