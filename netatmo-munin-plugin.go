@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 	"github.com/go-ini/ini"
-	netatmo "github.com/exzz/netatmo-api-go"
+	netatmo "github.com/romainbureau/netatmo-api-go"
 	"strconv"
 )
 
@@ -118,7 +118,7 @@ func main() {
 		// plugin info
 		for m_type, m_data := range modulesData { // type name + module data
 			switch m_type {
-			case "CO2":
+			case "co2":
 				if (configGlobal.CO2) {
 					fmt.Println("multigraph netatmo_co2")
 					fmt.Println("graph_title CO2 level")
@@ -131,7 +131,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "Noise":
+			case "noise":
 				if (configGlobal.Noise) {
 					fmt.Println("multigraph netatmo_noise")
 					fmt.Println("graph_title Noise level")
@@ -142,7 +142,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "Pressure":
+			case "pressure":
 				if (configGlobal.Pressure) {
 					fmt.Println("multigraph netatmo_pressure")
 					fmt.Println("graph_title Pressure level")
@@ -153,7 +153,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "Humidity":
+			case "humidity":
 				if (configGlobal.Humidity) {
 					fmt.Println("multigraph netatmo_humidity")
 					fmt.Println("graph_title Humidity level")
@@ -164,7 +164,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "Temperature":
+			case "temperature":
 				if (configGlobal.Temperature) {
 					fmt.Println("multigraph netatmo_temp")
 					fmt.Println("graph_title Temperature level")
@@ -175,7 +175,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "WindStrength":
+			case "windstrength":
 				if (configGlobal.WindStrength) {
 					fmt.Println("multigraph netatmo_wind")
 					fmt.Println("graph_title Wind speed")
@@ -187,7 +187,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "Rain1Day":
+			case "rain1day":
 				if (configGlobal.Rain) {
 					fmt.Println("multigraph netatmo_rain")
 					fmt.Println("graph_title Rain info")
@@ -199,7 +199,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "WindAngle":
+			case "windangle":
 				if (configGlobal.WindAngle) {
 					fmt.Println("multigraph netatmo_wind_angl")
 					fmt.Println("graph_title Wind direction")
@@ -217,7 +217,7 @@ func main() {
 		//display data
 		for m_type, m_data := range modulesData { // type name + module data
 			switch m_type {
-			case "CO2":
+			case "co2":
 				if (configGlobal.CO2) {
 					fmt.Println("multigraph netatmo_co2")
 					for key, value := range m_data {
@@ -225,7 +225,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "Noise":
+			case "noise":
 				if (configGlobal.Noise) {
 					fmt.Println("multigraph netatmo_noise")
 					for key, value := range m_data {
@@ -233,7 +233,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "Pressure":
+			case "pressure":
 				if (configGlobal.Pressure) {
 					fmt.Println("multigraph netatmo_pressure")
 					for key, value := range m_data {
@@ -241,7 +241,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "Humidity":
+			case "humidity":
 				if (configGlobal.Humidity) {
 					fmt.Println("multigraph netatmo_humidity")
 					for key, value := range m_data {
@@ -249,7 +249,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "Temperature":
+			case "temperature":
 				if (configGlobal.Temperature) {
 					fmt.Println("multigraph netatmo_temp")
 					for key, value := range m_data {
@@ -257,7 +257,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "WindStrength":
+			case "windstrength":
 				if (configGlobal.WindStrength) {
 					fmt.Println("multigraph netatmo_wind")
 					for key, value := range m_data {
@@ -266,7 +266,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "Rain1Day":
+			case "rain1day":
 				if (configGlobal.Rain) {
 					fmt.Println("multigraph netatmo_rain")
 					for key, value := range m_data {
@@ -275,7 +275,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "WindAngle":
+			case "windangle":
 				if (configGlobal.WindAngle) {
 					fmt.Println("multigraph netatmo_wind_angl")
 					for key, value := range m_data {
