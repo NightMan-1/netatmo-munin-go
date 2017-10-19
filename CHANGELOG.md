@@ -1,3 +1,11 @@
+## 2.1 (October 19, 2017)
+
+Features:
+
+  - graphics for wind direction
+  - enable/disable any graphics
+
+
 ## 2.0 (October 17, 2017)
 
 Features:

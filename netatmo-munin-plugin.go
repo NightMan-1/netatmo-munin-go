@@ -10,6 +10,7 @@ import (
 
 type configGlobalStruct struct {
 	ClientID, ClientSecret, Username, Password (string)
+	CO2, Noise, Pressure, Humidity, Temperature, WindStrength, Rain, WindAngle (bool)
 }
 var configGlobal (configGlobalStruct)
 
@@ -46,13 +47,34 @@ func main() {
 	configGlobal.Username = CfgSection.Key("Username").String()
 	configGlobal.Password = CfgSection.Key("Password").String()
 
-	if (configGlobal.ClientID == "" || configGlobal.ClientSecret == "" || configGlobal.Username == "" || configGlobal.Password == ""){
+	if (configGlobal.ClientID == "" || configGlobal.ClientSecret == "" || configGlobal.Username == "" || configGlobal.Password == "") {
 		fmt.Println("Wrong configuration")
 		os.Exit(1)
 	}
 
+
+	CfgSensors, err := cfg.GetSection("sensors")
+	tempVar, _ := CfgSensors.Key("CO2").Bool()
+	if (tempVar){configGlobal.CO2 = true}else {configGlobal.CO2 = false}
+	tempVar, _ = CfgSensors.Key("Noise").Bool()
+	if (tempVar){configGlobal.Noise = true}else {configGlobal.Noise = false}
+	tempVar, _ = CfgSensors.Key("Pressure").Bool()
+	if (tempVar){configGlobal.Pressure = true}else {configGlobal.Pressure = false}
+	tempVar, _ = CfgSensors.Key("Humidity").Bool()
+	if (tempVar){configGlobal.Humidity = true}else {configGlobal.Humidity = false}
+	tempVar, _ = CfgSensors.Key("Temperature").Bool()
+	if (tempVar){configGlobal.Temperature = true}else {configGlobal.Temperature = false}
+	tempVar, _ = CfgSensors.Key("WindStrength").Bool()
+	if (tempVar){configGlobal.WindStrength = true}else {configGlobal.WindStrength = false}
+	tempVar, _ = CfgSensors.Key("Rain").Bool()
+	if (tempVar){configGlobal.Rain = true}else {configGlobal.Rain = false}
+	tempVar, _ = CfgSensors.Key("WindAngle").Bool()
+	if (tempVar){configGlobal.WindAngle = true}else {configGlobal.WindAngle = false}
+
+
+
 	//help
-	if (len(os.Args) == 2 && os.Args[1] == "help"){
+	if (len(os.Args) == 2 && os.Args[1] == "help") {
 		fmt.Println("Netatmo Munin PlugIn v2.0")
 		fmt.Println("https://github.com/NightMan-1/netatmo-munin-go")
 		fmt.Println("(c)2017 Sergey Gurinovich")
@@ -82,7 +104,9 @@ func main() {
 		for _, module := range station.Modules() {
 			_, data := module.Data()
 			for dataType, value := range data {
-				if (dataType == "LastMesure"){continue}
+				if (dataType == "LastMesure") {
+					continue
+				}
 				t, _ := strconv.ParseFloat(fmt.Sprintf("%v", value), 64)
 				modulesData[dataType] = append(modulesData[dataType], modulesDataStruct{module.ModuleName, t})
 			}
@@ -90,129 +114,177 @@ func main() {
 		}
 	}
 
-	if (len(os.Args) == 2 && os.Args[1] == "config"){
+	if (len(os.Args) == 2 && os.Args[1] == "config") {
 		// plugin info
 		for m_type, m_data := range modulesData { // type name + module data
 			switch m_type {
 			case "CO2":
-				fmt.Println("multigraph netatmo_co2")
-				fmt.Println("graph_title CO2 level")
-				fmt.Println("graph_vlabel ppm")
-				fmt.Println("graph_category netatmo")
-				for key, value := range m_data {
-					fmt.Printf("co2_%v.label %v\n", key, value.name)
-					fmt.Printf("co2_%v.warning  1000\n", key)
-					fmt.Printf("co2_%v.critical 1500\n", key)
+				if (configGlobal.CO2) {
+					fmt.Println("multigraph netatmo_co2")
+					fmt.Println("graph_title CO2 level")
+					fmt.Println("graph_vlabel ppm")
+					fmt.Println("graph_category netatmo")
+					for key, value := range m_data {
+						fmt.Printf("co2_%v.label %v\n", key, value.name)
+						fmt.Printf("co2_%v.warning  1000\n", key)
+						fmt.Printf("co2_%v.critical 1500\n", key)
+					}
+					fmt.Println("")
 				}
-				fmt.Println("")
 			case "Noise":
-				fmt.Println("multigraph netatmo_noise")
-				fmt.Println("graph_title Noise level")
-				fmt.Println("graph_vlabel dB")
-				fmt.Println("graph_category netatmo")
-				for key, value := range m_data {
-					fmt.Printf("noise_%v.label %v\n", key, value.name)
+				if (configGlobal.Noise) {
+					fmt.Println("multigraph netatmo_noise")
+					fmt.Println("graph_title Noise level")
+					fmt.Println("graph_vlabel dB")
+					fmt.Println("graph_category netatmo")
+					for key, value := range m_data {
+						fmt.Printf("noise_%v.label %v\n", key, value.name)
+					}
+					fmt.Println("")
 				}
-				fmt.Println("")
 			case "Pressure":
-				fmt.Println("multigraph netatmo_pressure")
-				fmt.Println("graph_title Pressure level")
-				fmt.Println("graph_vlabel mmHg")
-				fmt.Println("graph_category netatmo")
-				for key, value := range m_data {
-					fmt.Printf("pressure_%v.label %v\n", key, value.name)
+				if (configGlobal.Pressure) {
+					fmt.Println("multigraph netatmo_pressure")
+					fmt.Println("graph_title Pressure level")
+					fmt.Println("graph_vlabel mmHg")
+					fmt.Println("graph_category netatmo")
+					for key, value := range m_data {
+						fmt.Printf("pressure_%v.label %v\n", key, value.name)
+					}
+					fmt.Println("")
 				}
-				fmt.Println("")
 			case "Humidity":
-				fmt.Println("multigraph netatmo_humidity")
-				fmt.Println("graph_title Humidity level")
-				fmt.Println("graph_vlabel %")
-				fmt.Println("graph_category netatmo")
-				for key, value := range m_data {
-					fmt.Printf("hum_%v.label %v\n", key, value.name)
+				if (configGlobal.Humidity) {
+					fmt.Println("multigraph netatmo_humidity")
+					fmt.Println("graph_title Humidity level")
+					fmt.Println("graph_vlabel %")
+					fmt.Println("graph_category netatmo")
+					for key, value := range m_data {
+						fmt.Printf("hum_%v.label %v\n", key, value.name)
+					}
+					fmt.Println("")
 				}
-				fmt.Println("")
 			case "Temperature":
-				fmt.Println("multigraph netatmo_temp")
-				fmt.Println("graph_title Temperature level")
-				fmt.Println("graph_vlabel °C")
-				fmt.Println("graph_category netatmo")
-				for key, value := range m_data {
-					fmt.Printf("temp_%v.label %v\n", key, value.name)
+				if (configGlobal.Temperature) {
+					fmt.Println("multigraph netatmo_temp")
+					fmt.Println("graph_title Temperature level")
+					fmt.Println("graph_vlabel °C")
+					fmt.Println("graph_category netatmo")
+					for key, value := range m_data {
+						fmt.Printf("temp_%v.label %v\n", key, value.name)
+					}
+					fmt.Println("")
 				}
-				fmt.Println("")
 			case "WindStrength":
-				fmt.Println("multigraph netatmo_wind")
-				fmt.Println("graph_title Wind speed")
-				fmt.Println("graph_vlabel km/h")
-				fmt.Println("graph_category netatmo")
-				for key, value := range m_data {
-					fmt.Printf("wind_speed_%v.label %v (speed)\n", key, value.name)
-					fmt.Printf("wind_gust_%v.label %v (gust)\n", key, value.name)
+				if (configGlobal.WindStrength) {
+					fmt.Println("multigraph netatmo_wind")
+					fmt.Println("graph_title Wind speed")
+					fmt.Println("graph_vlabel km/h")
+					fmt.Println("graph_category netatmo")
+					for key, value := range m_data {
+						fmt.Printf("wind_speed_%v.label %v (speed)\n", key, value.name)
+						fmt.Printf("wind_gust_%v.label %v (gust)\n", key, value.name)
+					}
+					fmt.Println("")
 				}
-				fmt.Println("")
 			case "Rain1Day":
-				fmt.Println("multigraph netatmo_rain")
-				fmt.Println("graph_title Rain info")
-				fmt.Println("graph_vlabel mm")
-				fmt.Println("graph_category netatmo")
-				for key, value := range m_data {
-					fmt.Printf("rain_daily_%v.label %v (daily)\n", key, value.name)
-					fmt.Printf("rain_hourly_%v.label %v (hourly)\n", key, value.name)
+				if (configGlobal.Rain) {
+					fmt.Println("multigraph netatmo_rain")
+					fmt.Println("graph_title Rain info")
+					fmt.Println("graph_vlabel mm")
+					fmt.Println("graph_category netatmo")
+					for key, value := range m_data {
+						fmt.Printf("rain_daily_%v.label %v (daily)\n", key, value.name)
+						fmt.Printf("rain_hourly_%v.label %v (hourly)\n", key, value.name)
+					}
+					fmt.Println("")
 				}
-				fmt.Println("")
+			case "WindAngle":
+				if (configGlobal.WindAngle) {
+					fmt.Println("multigraph netatmo_wind_angl")
+					fmt.Println("graph_title Wind direction")
+					fmt.Println("graph_vlabel degrees")
+					fmt.Println("graph_category netatmo")
+					for key, value := range m_data {
+						fmt.Printf("wind_angle_%v.label %v\n", key, value.name)
+						fmt.Printf("gust_angle_%v.label %v\n", key, value.name)
+					}
+					fmt.Println("")
+				}
 			}
 		}
-	}else{
+	} else {
 		//display data
 		for m_type, m_data := range modulesData { // type name + module data
 			switch m_type {
 			case "CO2":
-				fmt.Println("multigraph netatmo_co2")
-				for key, value := range m_data {
-					fmt.Printf("co2_%v.value %v\n", key, value.data)
+				if (configGlobal.CO2) {
+					fmt.Println("multigraph netatmo_co2")
+					for key, value := range m_data {
+						fmt.Printf("co2_%v.value %v\n", key, value.data)
+					}
+					fmt.Println("")
 				}
-				fmt.Println("")
 			case "Noise":
-				fmt.Println("multigraph netatmo_noise")
-				for key, value := range m_data {
-					fmt.Printf("noise_%v.value %v\n", key, value.data)
+				if (configGlobal.Noise) {
+					fmt.Println("multigraph netatmo_noise")
+					for key, value := range m_data {
+						fmt.Printf("noise_%v.value %v\n", key, value.data)
+					}
+					fmt.Println("")
 				}
-				fmt.Println("")
 			case "Pressure":
-				fmt.Println("multigraph netatmo_pressure")
-				for key, value := range m_data {
-					fmt.Printf("pressure_%v.value %00.2f\n", key, value.data * 0.75006375541921)
+				if (configGlobal.Pressure) {
+					fmt.Println("multigraph netatmo_pressure")
+					for key, value := range m_data {
+						fmt.Printf("pressure_%v.value %00.2f\n", key, value.data*0.75006375541921)
+					}
+					fmt.Println("")
 				}
-				fmt.Println("")
 			case "Humidity":
-				fmt.Println("multigraph netatmo_humidity")
-				for key, value := range m_data {
-					fmt.Printf("hum_%v.value %v\n", key, value.data)
+				if (configGlobal.Humidity) {
+					fmt.Println("multigraph netatmo_humidity")
+					for key, value := range m_data {
+						fmt.Printf("hum_%v.value %v\n", key, value.data)
+					}
+					fmt.Println("")
 				}
-				fmt.Println("")
 			case "Temperature":
-				fmt.Println("multigraph netatmo_temp")
-				for key, value := range m_data {
-					fmt.Printf("temp_%v.value %v\n", key, value.data)
+				if (configGlobal.Temperature) {
+					fmt.Println("multigraph netatmo_temp")
+					for key, value := range m_data {
+						fmt.Printf("temp_%v.value %v\n", key, value.data)
+					}
+					fmt.Println("")
 				}
-				fmt.Println("")
 			case "WindStrength":
-				fmt.Println("multigraph netatmo_wind")
-				for key, value := range m_data {
-					fmt.Printf("wind_speed_%v.value %v\n", key, value.data)
-					fmt.Printf("wind_gust_%v.value %v\n", key, value.data)
+				if (configGlobal.WindStrength) {
+					fmt.Println("multigraph netatmo_wind")
+					for key, value := range m_data {
+						fmt.Printf("wind_speed_%v.value %v\n", key, value.data)
+						fmt.Printf("wind_gust_%v.value %v\n", key, value.data)
+					}
+					fmt.Println("")
 				}
-				fmt.Println("")
 			case "Rain1Day":
-				fmt.Println("multigraph netatmo_rain")
-				for key, value := range m_data {
-					fmt.Printf("rain_daily_%v.value %v\n", key, value.data)
-					fmt.Printf("rain_hourly_%v.value %v\n", key, value.data)
+				if (configGlobal.Rain) {
+					fmt.Println("multigraph netatmo_rain")
+					for key, value := range m_data {
+						fmt.Printf("rain_daily_%v.value %v\n", key, value.data)
+						fmt.Printf("rain_hourly_%v.value %v\n", key, value.data)
+					}
+					fmt.Println("")
 				}
-				fmt.Println("")
+			case "WindAngle":
+				if (configGlobal.WindAngle) {
+					fmt.Println("multigraph netatmo_wind_angl")
+					for key, value := range m_data {
+						fmt.Printf("wind_angle_%v.value %v\n", key, value.data)
+						fmt.Printf("gust_angle_%v.value %v\n", key, value.data)
+					}
+					fmt.Println("")
+				}
 			}
 		}
-
 	}
 }
