@@ -1,3 +1,9 @@
+## 2.2 (October 25, 2017)
+
+Fix:
+
+  - wrong data at some graphics
+
 ## 2.1 (October 19, 2017)
 
 Features:

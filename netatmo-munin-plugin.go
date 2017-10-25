@@ -54,7 +54,7 @@ func main() {
 
 
 	CfgSensors, err := cfg.GetSection("sensors")
-	tempVar, _ := CfgSensors.Key("CO2").Bool()
+	tempVar, err := CfgSensors.Key("CO2").Bool()
 	if (tempVar){configGlobal.CO2 = true}else {configGlobal.CO2 = false}
 	tempVar, _ = CfgSensors.Key("Noise").Bool()
 	if (tempVar){configGlobal.Noise = true}else {configGlobal.Noise = false}
@@ -260,27 +260,27 @@ func main() {
 			case "windstrength":
 				if (configGlobal.WindStrength) {
 					fmt.Println("multigraph netatmo_wind")
-					for key, value := range m_data {
-						fmt.Printf("wind_speed_%v.value %v\n", key, value.data)
-						fmt.Printf("wind_gust_%v.value %v\n", key, value.data)
+					for key, _ := range m_data {
+						fmt.Printf("wind_speed_%v.value %v\n", key, modulesData["windstrength"][key].data)
+						fmt.Printf("wind_gust_%v.value %v\n", key, modulesData["guststrength"][key].data)
 					}
 					fmt.Println("")
 				}
 			case "rain1day":
 				if (configGlobal.Rain) {
 					fmt.Println("multigraph netatmo_rain")
-					for key, value := range m_data {
-						fmt.Printf("rain_daily_%v.value %v\n", key, value.data)
-						fmt.Printf("rain_hourly_%v.value %v\n", key, value.data)
+					for key, _ := range m_data {
+						fmt.Printf("rain_daily_%v.value %v\n", key, (modulesData["rain1day"][key].data / 100))
+						fmt.Printf("rain_hourly_%v.value %v\n", key, (modulesData["rain1hour"][key].data / 100))
 					}
 					fmt.Println("")
 				}
 			case "windangle":
 				if (configGlobal.WindAngle) {
 					fmt.Println("multigraph netatmo_wind_angl")
-					for key, value := range m_data {
-						fmt.Printf("wind_angle_%v.value %v\n", key, value.data)
-						fmt.Printf("gust_angle_%v.value %v\n", key, value.data)
+					for key, _ := range m_data {
+						fmt.Printf("wind_angle_%v.value %v\n", key, modulesData["windangle"][key].data)
+						fmt.Printf("gust_angle_%v.value %v\n", key, modulesData["gustangle"][key].data)
 					}
 					fmt.Println("")
 				}
