@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 	"github.com/go-ini/ini"
-	netatmo "github.com/romainbureau/netatmo-api-go"
+	netatmo "github.com/NightMan-1/netatmo-api-go"
 	"strconv"
 )
 
@@ -101,14 +101,21 @@ func main() {
 
 	//parce NetAtmo data
 	for _, station := range dc.Stations() {
+		//fmt.Printf("Station : %v\n", station.StationName)
 		for _, module := range station.Modules() {
+			//fmt.Printf("\tModule : %v\n", module.ModuleName)
 			_, data := module.Data()
 			for dataType, value := range data {
+				//fmt.Printf("\t\t%s : %v\n", dataType, value)
 				if (dataType == "LastMesure") {
 					continue
 				}
 				t, _ := strconv.ParseFloat(fmt.Sprintf("%v", value), 64)
-				modulesData[dataType] = append(modulesData[dataType], modulesDataStruct{module.ModuleName, t})
+				if (len(dc.Stations()) > 1){
+					modulesData[dataType] = append(modulesData[dataType], modulesDataStruct{module.ModuleName + " (" + station.StationName + ")", t})
+				}else{
+					modulesData[dataType] = append(modulesData[dataType], modulesDataStruct{module.ModuleName, t})
+				}
 			}
 
 		}
@@ -118,7 +125,7 @@ func main() {
 		// plugin info
 		for m_type, m_data := range modulesData { // type name + module data
 			switch m_type {
-			case "co2":
+			case "CO2":
 				if (configGlobal.CO2) {
 					fmt.Println("multigraph netatmo_co2")
 					fmt.Println("graph_title CO2 level")
@@ -131,7 +138,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "noise":
+			case "Noise":
 				if (configGlobal.Noise) {
 					fmt.Println("multigraph netatmo_noise")
 					fmt.Println("graph_title Noise level")
@@ -142,7 +149,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "pressure":
+			case "Pressure":
 				if (configGlobal.Pressure) {
 					fmt.Println("multigraph netatmo_pressure")
 					fmt.Println("graph_title Pressure level")
@@ -153,7 +160,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "humidity":
+			case "Humidity":
 				if (configGlobal.Humidity) {
 					fmt.Println("multigraph netatmo_humidity")
 					fmt.Println("graph_title Humidity level")
@@ -164,7 +171,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "temperature":
+			case "Temperature":
 				if (configGlobal.Temperature) {
 					fmt.Println("multigraph netatmo_temp")
 					fmt.Println("graph_title Temperature level")
@@ -175,7 +182,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "windstrength":
+			case "WindStrength":
 				if (configGlobal.WindStrength) {
 					fmt.Println("multigraph netatmo_wind")
 					fmt.Println("graph_title Wind speed")
@@ -183,43 +190,23 @@ func main() {
 					fmt.Println("graph_category netatmo")
 					for key, value := range m_data {
 						fmt.Printf("wind_speed_%v.label %v (speed)\n", key, value.name)
+						fmt.Printf("wind_gust_%v.label %v (gust)\n", key, value.name)
 					}
 					fmt.Println("")
 				}
-			case "guststrength":
-				if (configGlobal.WindStrength) {
-					fmt.Println("multigraph netatmo_wind_gust")
-					fmt.Println("graph_title Wind gust speed")
-					fmt.Println("graph_vlabel km/h")
-					fmt.Println("graph_category netatmo")
-					for key, value := range m_data {
-						fmt.Printf("wind_gust_%v.label %v (speed)\n", key, value.name)
-					}
-					fmt.Println("")
-				}
-			case "rain1day":
+			case "Rain1Day":
 				if (configGlobal.Rain) {
-					fmt.Println("multigraph netatmo_rain_daily")
-					fmt.Println("graph_title Rain daily info")
+					fmt.Println("multigraph netatmo_rain")
+					fmt.Println("graph_title Rain info")
 					fmt.Println("graph_vlabel mm")
 					fmt.Println("graph_category netatmo")
 					for key, value := range m_data {
 						fmt.Printf("rain_daily_%v.label %v (daily)\n", key, value.name)
-					}
-					fmt.Println("")
-				}
-			case "rain1hour":
-				if (configGlobal.Rain) {
-					fmt.Println("multigraph netatmo_rain_hourly")
-					fmt.Println("graph_title Rain hourly info")
-					fmt.Println("graph_vlabel mm")
-					fmt.Println("graph_category netatmo")
-					for key, value := range m_data {
 						fmt.Printf("rain_hourly_%v.label %v (hourly)\n", key, value.name)
 					}
 					fmt.Println("")
 				}
-			case "windangle":
+			case "WindAngle":
 				if (configGlobal.WindAngle) {
 					fmt.Println("multigraph netatmo_wind_angl")
 					fmt.Println("graph_title Wind direction")
@@ -227,16 +214,6 @@ func main() {
 					fmt.Println("graph_category netatmo")
 					for key, value := range m_data {
 						fmt.Printf("wind_angle_%v.label %v\n", key, value.name)
-					}
-					fmt.Println("")
-				}
-			case "gustangle":
-				if (configGlobal.WindAngle) {
-					fmt.Println("multigraph netatmo_wind_gust_angl")
-					fmt.Println("graph_title Wind gust direction")
-					fmt.Println("graph_vlabel degrees")
-					fmt.Println("graph_category netatmo")
-					for key, value := range m_data {
 						fmt.Printf("gust_angle_%v.label %v\n", key, value.name)
 					}
 					fmt.Println("")
@@ -247,7 +224,7 @@ func main() {
 		//display data
 		for m_type, m_data := range modulesData { // type name + module data
 			switch m_type {
-			case "co2":
+			case "CO2":
 				if (configGlobal.CO2) {
 					fmt.Println("multigraph netatmo_co2")
 					for key, value := range m_data {
@@ -255,7 +232,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "noise":
+			case "Noise":
 				if (configGlobal.Noise) {
 					fmt.Println("multigraph netatmo_noise")
 					for key, value := range m_data {
@@ -263,7 +240,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "pressure":
+			case "Pressure":
 				if (configGlobal.Pressure) {
 					fmt.Println("multigraph netatmo_pressure")
 					for key, value := range m_data {
@@ -271,7 +248,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "humidity":
+			case "Humidity":
 				if (configGlobal.Humidity) {
 					fmt.Println("multigraph netatmo_humidity")
 					for key, value := range m_data {
@@ -279,7 +256,7 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "temperature":
+			case "Temperature":
 				if (configGlobal.Temperature) {
 					fmt.Println("multigraph netatmo_temp")
 					for key, value := range m_data {
@@ -287,51 +264,30 @@ func main() {
 					}
 					fmt.Println("")
 				}
-			case "windstrength":
+			case "WindStrength":
 				if (configGlobal.WindStrength) {
 					fmt.Println("multigraph netatmo_wind")
-					for key, value := range m_data {
-						fmt.Printf("wind_speed_%v.value %v\n", key, value.data)
+					for key, _ := range m_data {
+						fmt.Printf("wind_speed_%v.value %v\n", key, modulesData["WindStrength"][key].data)
+						fmt.Printf("wind_gust_%v.value %v\n", key, modulesData["GustStrength"][key].data)
 					}
 					fmt.Println("")
 				}
-			case "guststrength":
-				if (configGlobal.WindStrength) {
-					fmt.Println("multigraph netatmo_wind_gust")
-					for key, value := range m_data {
-						fmt.Printf("wind_gust_%v.value %v\n", key, value.data)
-					}
-					fmt.Println("")
-				}
-			case "rain1day":
+			case "Rain1Day":
 				if (configGlobal.Rain) {
-					fmt.Println("multigraph netatmo_rain_daily")
-					for key, value := range m_data {
-						fmt.Printf("rain_daily_%v.value %v\n", key, (value.data / 100))
+					fmt.Println("multigraph netatmo_rain")
+					for key, _ := range m_data {
+						fmt.Printf("rain_daily_%v.value %v\n", key, modulesData["Rain1Day"][key].data)
+						fmt.Printf("rain_hourly_%v.value %v\n", key, modulesData["Rain1Hour"][key].data)
 					}
 					fmt.Println("")
 				}
-			case "rain1hour":
-				if (configGlobal.Rain) {
-					fmt.Println("multigraph netatmo_rain_hourly")
-					for key, value := range m_data {
-						fmt.Printf("rain_hourly_%v.value %v\n", key, (value.data / 100))
-					}
-					fmt.Println("")
-				}
-			case "windangle":
+			case "WindAngle":
 				if (configGlobal.WindAngle) {
 					fmt.Println("multigraph netatmo_wind_angl")
-					for key, value := range m_data {
-						fmt.Printf("wind_angle_%v.value %v\n", key, value.data)
-					}
-					fmt.Println("")
-				}
-			case "gustangle":
-				if (configGlobal.WindAngle) {
-					fmt.Println("multigraph netatmo_wind_gust_angl")
-					for key, value := range m_data {
-						fmt.Printf("gust_angle_%v.value %v\n", key, value.data)
+					for key, _ := range m_data {
+						fmt.Printf("wind_angle_%v.value %v\n", key, modulesData["WindAngle"][key].data)
+						fmt.Printf("gust_angle_%v.value %v\n", key, modulesData["GustAngle"][key].data)
 					}
 					fmt.Println("")
 				}

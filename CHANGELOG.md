@@ -1,8 +1,13 @@
 ## 2.2 (October 25, 2017)
 
+Features:
+
+  - support for multiple station
+
 Fix:
 
   - wrong data at some graphics
+  - fix GustStrength data in API
 
 ## 2.1 (October 19, 2017)
 
