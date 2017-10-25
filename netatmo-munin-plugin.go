@@ -183,18 +183,38 @@ func main() {
 					fmt.Println("graph_category netatmo")
 					for key, value := range m_data {
 						fmt.Printf("wind_speed_%v.label %v (speed)\n", key, value.name)
-						fmt.Printf("wind_gust_%v.label %v (gust)\n", key, value.name)
+					}
+					fmt.Println("")
+				}
+			case "guststrength":
+				if (configGlobal.WindStrength) {
+					fmt.Println("multigraph netatmo_wind_gust")
+					fmt.Println("graph_title Wind gust speed")
+					fmt.Println("graph_vlabel km/h")
+					fmt.Println("graph_category netatmo")
+					for key, value := range m_data {
+						fmt.Printf("wind_gust_%v.label %v (speed)\n", key, value.name)
 					}
 					fmt.Println("")
 				}
 			case "rain1day":
 				if (configGlobal.Rain) {
-					fmt.Println("multigraph netatmo_rain")
-					fmt.Println("graph_title Rain info")
+					fmt.Println("multigraph netatmo_rain_daily")
+					fmt.Println("graph_title Rain daily info")
 					fmt.Println("graph_vlabel mm")
 					fmt.Println("graph_category netatmo")
 					for key, value := range m_data {
 						fmt.Printf("rain_daily_%v.label %v (daily)\n", key, value.name)
+					}
+					fmt.Println("")
+				}
+			case "rain1hour":
+				if (configGlobal.Rain) {
+					fmt.Println("multigraph netatmo_rain_hourly")
+					fmt.Println("graph_title Rain hourly info")
+					fmt.Println("graph_vlabel mm")
+					fmt.Println("graph_category netatmo")
+					for key, value := range m_data {
 						fmt.Printf("rain_hourly_%v.label %v (hourly)\n", key, value.name)
 					}
 					fmt.Println("")
@@ -207,6 +227,16 @@ func main() {
 					fmt.Println("graph_category netatmo")
 					for key, value := range m_data {
 						fmt.Printf("wind_angle_%v.label %v\n", key, value.name)
+					}
+					fmt.Println("")
+				}
+			case "gustangle":
+				if (configGlobal.WindAngle) {
+					fmt.Println("multigraph netatmo_wind_gust_angl")
+					fmt.Println("graph_title Wind gust direction")
+					fmt.Println("graph_vlabel degrees")
+					fmt.Println("graph_category netatmo")
+					for key, value := range m_data {
 						fmt.Printf("gust_angle_%v.label %v\n", key, value.name)
 					}
 					fmt.Println("")
@@ -260,27 +290,48 @@ func main() {
 			case "windstrength":
 				if (configGlobal.WindStrength) {
 					fmt.Println("multigraph netatmo_wind")
-					for key, _ := range m_data {
-						fmt.Printf("wind_speed_%v.value %v\n", key, modulesData["windstrength"][key].data)
-						fmt.Printf("wind_gust_%v.value %v\n", key, modulesData["guststrength"][key].data)
+					for key, value := range m_data {
+						fmt.Printf("wind_speed_%v.value %v\n", key, value.data)
+					}
+					fmt.Println("")
+				}
+			case "guststrength":
+				if (configGlobal.WindStrength) {
+					fmt.Println("multigraph netatmo_wind_gust")
+					for key, value := range m_data {
+						fmt.Printf("wind_gust_%v.value %v\n", key, value.data)
 					}
 					fmt.Println("")
 				}
 			case "rain1day":
 				if (configGlobal.Rain) {
-					fmt.Println("multigraph netatmo_rain")
-					for key, _ := range m_data {
-						fmt.Printf("rain_daily_%v.value %v\n", key, (modulesData["rain1day"][key].data / 100))
-						fmt.Printf("rain_hourly_%v.value %v\n", key, (modulesData["rain1hour"][key].data / 100))
+					fmt.Println("multigraph netatmo_rain_daily")
+					for key, value := range m_data {
+						fmt.Printf("rain_daily_%v.value %v\n", key, (value.data / 100))
+					}
+					fmt.Println("")
+				}
+			case "rain1hour":
+				if (configGlobal.Rain) {
+					fmt.Println("multigraph netatmo_rain_hourly")
+					for key, value := range m_data {
+						fmt.Printf("rain_hourly_%v.value %v\n", key, (value.data / 100))
 					}
 					fmt.Println("")
 				}
 			case "windangle":
 				if (configGlobal.WindAngle) {
 					fmt.Println("multigraph netatmo_wind_angl")
-					for key, _ := range m_data {
-						fmt.Printf("wind_angle_%v.value %v\n", key, modulesData["windangle"][key].data)
-						fmt.Printf("gust_angle_%v.value %v\n", key, modulesData["gustangle"][key].data)
+					for key, value := range m_data {
+						fmt.Printf("wind_angle_%v.value %v\n", key, value.data)
+					}
+					fmt.Println("")
+				}
+			case "gustangle":
+				if (configGlobal.WindAngle) {
+					fmt.Println("multigraph netatmo_wind_gust_angl")
+					for key, value := range m_data {
+						fmt.Printf("gust_angle_%v.value %v\n", key, value.data)
 					}
 					fmt.Println("")
 				}
