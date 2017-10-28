@@ -75,13 +75,13 @@ func main() {
 		Password:     configGlobal.Password,
 	})
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Cannot connect to NetAtmo server: ", err)
 		os.Exit(1)
 	}
 
 	dc, err := n.Read()
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Cannot read NetAtmo data: ", err)
 		os.Exit(1)
 	}
 
