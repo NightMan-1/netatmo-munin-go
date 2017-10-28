@@ -1,3 +1,14 @@
+## 2.3 (October 28, 2017)
+
+  - new NetAtmo API source
+  - code optimization
+  - new graphics: BatteryPercent, RFStatus, WifiStatus
+  - better rain graph
+  - new configuration parcer
+  
+_**Warning! Configuration format changed!**_
+
+
 ## 2.2 (October 25, 2017)
 
 Features:
