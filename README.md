@@ -1,4 +1,6 @@
-# NetAtmo plug-in for Munin v2.3
+# NetAtmo plug-in for Munin v2.3 
+
+[![Build Status](https://travis-ci.org/NightMan-1/netatmo-munin-go.svg?branch=master)](https://travis-ci.org/NightMan-1/netatmo-munin-go)
 
 ## Dependencies
 NetAtmo Weather Station  
@@ -10,8 +12,8 @@ Munin-node 2.x
 Open https://dev.netatmo.com and create first application, then:
 
 ~~~sh
-go get -u github.com/exzz/netatmo-api-go
-go get -u github.com/BurntSushi/toml
+go get github.com/exzz/netatmo-api-go
+go get github.com/BurntSushi/toml
 git clone https://github.com/NightMan-1/netatmo-munin-go
 cd netatmo-munin-go
 chmod +x install.sh
