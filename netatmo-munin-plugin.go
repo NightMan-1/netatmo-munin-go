@@ -52,6 +52,10 @@ func main() {
 		fmt.Println("Wrong configuration")
 		os.Exit(1)
 	}
+	if (configGlobal.ClientID == "ClientID" || configGlobal.ClientSecret == "ClientSecret" || configGlobal.Username == "Username" || configGlobal.Password == "Password") {
+		fmt.Println("Do not forget change example configuration settings :)")
+		os.Exit(1)
+	}
 
 
 
