@@ -10,8 +10,8 @@ Munin-node 2.x
 Open https://dev.netatmo.com and create first application, then:
 
 ~~~sh
-go get github.com/exzz/netatmo-api-go
-go get github.com/BurntSushi/toml
+go get -u github.com/exzz/netatmo-api-go
+go get -u github.com/BurntSushi/toml
 git clone https://github.com/NightMan-1/netatmo-munin-go
 cd netatmo-munin-go
 chmod +x install.sh
