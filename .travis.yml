@@ -1,0 +1,27 @@
+language: go
+
+# Don't build other branches that are being used for PRs.
+# Currently only the master branch is used in this repo.
+branches:
+  only:
+    - master
+
+matrix:
+  # It's ok if our code fails on unstable development versions of Go.
+  allow_failures:
+    - go: tip
+  # Don't wait for tip tests to finish. Mark the test run green if the
+  # tests pass on the stable versions of Go.
+  fast_finish: true
+
+go:
+  - 1.9
+  - tip
+
+
+install:
+  # Install all external dependencies, ensuring they are updated.
+  - go get -u github.com/exzz/netatmo-api-go
+  - go get -u -v github.com/BurntSushi/toml
+
+
