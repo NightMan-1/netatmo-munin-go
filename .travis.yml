@@ -25,3 +25,5 @@ install:
   - go get -u -v github.com/BurntSushi/toml
 
 
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -t 01e6da28-897c-441e-9160-928a761b28cc
