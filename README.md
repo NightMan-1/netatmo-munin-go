@@ -24,11 +24,11 @@ chmod +x install.sh
 
 ## Sample data
 
-[![Temperature](sample/temp.png)]()
-[![CO2](sample/co2.png)]()
-[![Humidity](sample/humidity.png)]()
-[![Pressure](sample/pressure.png)]()
-[![Rain](sample/rain.png)]()
+![Temperature](sample/temp.png)
+![CO2](sample/co2.png)
+![Humidity](sample/humidity.png)
+![Pressure](sample/pressure.png)
+![Rain](sample/rain.png)
 
 
 
