@@ -1,3 +1,7 @@
+## 3.0 (November 14, 2017)
+
+    - better data visualization
+
 ## 2.3 (October 28, 2017)
 
   - new NetAtmo API source
