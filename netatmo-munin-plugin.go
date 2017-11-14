@@ -125,15 +125,16 @@ func main() {
 			if (configGlobal.Sensors.BatteryPercent) {
 				fmt.Println("multigraph netatmo_battery")
 				if (DisplayConfig){
-					fmt.Println("graph_title BatteryPercent level")
-					//fmt.Println("graph_vlabel level")
+					fmt.Println("graph_title Battery")
+					fmt.Println("graph_vlabel percent")
 					fmt.Println("graph_category netatmo")
 					for key, value := range m_data {
 						fmt.Printf("battery_%v.label %v\n", key, value.name)
+						fmt.Printf("battery_%v.draw LINE1\n", key)
 					}
 				}else{
 					for key, value := range m_data {
-						fmt.Printf("battery_%v.value %v\n", key, value.data)
+						fmt.Printf("battery_%v.value %.0f\n", key, value.data)
 					}
 				}
 			}
@@ -141,15 +142,16 @@ func main() {
 			if (configGlobal.Sensors.BatteryPercent) {
 				fmt.Println("multigraph netatmo_WifiStatus")
 				if (DisplayConfig){
-					fmt.Println("graph_title WifiStatus level")
+					fmt.Println("graph_title Wifi status")
 					//fmt.Println("graph_vlabel level")
 					fmt.Println("graph_category netatmo")
 					for key, value := range m_data {
 						fmt.Printf("WifiStatus_%v.label %v\n", key, value.name)
+						fmt.Printf("WifiStatus_%v.draw LINE1\n", key)
 					}
 				}else{
 					for key, value := range m_data {
-						fmt.Printf("WifiStatus_%v.value %v\n", key, value.data)
+						fmt.Printf("WifiStatus_%v.value %.0f\n", key, value.data)
 					}
 				}
 			}
@@ -157,15 +159,16 @@ func main() {
 			if (configGlobal.Sensors.BatteryPercent) {
 				fmt.Println("multigraph netatmo_RFStatus")
 				if (DisplayConfig){
-					fmt.Println("graph_title RFStatus level")
+					fmt.Println("graph_title RF status")
 					//fmt.Println("graph_vlabel level")
 					fmt.Println("graph_category netatmo")
 					for key, value := range m_data {
 						fmt.Printf("RFStatus_%v.label %v\n", key, value.name)
+						fmt.Printf("RFStatus_%v.draw LINE1\n", key)
 					}
 				}else{
 					for key, value := range m_data {
-						fmt.Printf("RFStatus_%v.value %v\n", key, value.data)
+						fmt.Printf("RFStatus_%v.value %.0f\n", key, value.data)
 					}
 				}
 			}
@@ -173,17 +176,18 @@ func main() {
 			if (configGlobal.Sensors.CO2) {
 				fmt.Println("multigraph netatmo_co2")
 				if (DisplayConfig){
-					fmt.Println("graph_title CO2 level")
+					fmt.Println("graph_title CO₂")
 					fmt.Println("graph_vlabel ppm")
 					fmt.Println("graph_category netatmo")
 					for key, value := range m_data {
 						fmt.Printf("co2_%v.label %v\n", key, value.name)
 						fmt.Printf("co2_%v.warning  1000\n", key)
 						fmt.Printf("co2_%v.critical 1500\n", key)
+						fmt.Printf("co2_%v.draw LINE1\n", key)
 					}
 				}else{
 					for key, value := range m_data {
-						fmt.Printf("co2_%v.value %v\n", key, value.data)
+						fmt.Printf("co2_%v.value %.0f\n", key, value.data)
 					}
 				}
 			}
@@ -191,15 +195,16 @@ func main() {
 			if (configGlobal.Sensors.Noise) {
 				fmt.Println("multigraph netatmo_noise")
 				if (DisplayConfig){
-					fmt.Println("graph_title Noise level")
+					fmt.Println("graph_title Sonometer (noise level)")
 					fmt.Println("graph_vlabel dB")
 					fmt.Println("graph_category netatmo")
 					for key, value := range m_data {
 						fmt.Printf("noise_%v.label %v\n", key, value.name)
+						fmt.Printf("noise_%v.draw LINE1\n", key)
 					}
 				}else{
 					for key, value := range m_data {
-						fmt.Printf("noise_%v.value %v\n", key, value.data)
+						fmt.Printf("noise_%v.value %.0f\n", key, value.data)
 					}
 				}
 			}
@@ -207,11 +212,12 @@ func main() {
 			if (configGlobal.Sensors.Pressure) {
 				fmt.Println("multigraph netatmo_pressure")
 				if (DisplayConfig){
-					fmt.Println("graph_title Pressure level")
+					fmt.Println("graph_title Pressure")
 					fmt.Println("graph_vlabel mmHg")
 					fmt.Println("graph_category netatmo")
 					for key, value := range m_data {
 						fmt.Printf("pressure_%v.label %v\n", key, value.name)
+						fmt.Printf("pressure_%v.draw LINE1\n", key)
 					}
 				}else{
 					for key, value := range m_data {
@@ -224,15 +230,18 @@ func main() {
 			if (configGlobal.Sensors.Humidity) {
 				fmt.Println("multigraph netatmo_humidity")
 				if (DisplayConfig){
-					fmt.Println("graph_title Humidity level")
-					fmt.Println("graph_vlabel %")
+					fmt.Println("graph_title Humidity")
+					fmt.Println("graph_vlabel percent")
 					fmt.Println("graph_category netatmo")
 					for key, value := range m_data {
 						fmt.Printf("hum_%v.label %v\n", key, value.name)
+						fmt.Printf("hum_%v.min 0\n", key)
+						fmt.Printf("hum_%v.max 100\n", key)
+						fmt.Printf("hum_%v.draw LINE1\n", key)
 					}
 				}else{
 					for key, value := range m_data {
-						fmt.Printf("hum_%v.value %v\n", key, value.data)
+						fmt.Printf("hum_%v.value %.0f\n", key, value.data)
 					}
 				}
 			}
@@ -240,15 +249,16 @@ func main() {
 			if (configGlobal.Sensors.Temperature) {
 				fmt.Println("multigraph netatmo_temp")
 				if (DisplayConfig){
-					fmt.Println("graph_title Temperature level")
+					fmt.Println("graph_title Temperature")
 					fmt.Println("graph_vlabel °C")
 					fmt.Println("graph_category netatmo")
 					for key, value := range m_data {
 						fmt.Printf("temp_%v.label %v\n", key, value.name)
+						fmt.Printf("temp_%v.draw LINE1\n", key)
 					}
 				}else{
 					for key, value := range m_data {
-						fmt.Printf("temp_%v.value %v\n", key, value.data)
+						fmt.Printf("temp_%v.value %.1f\n", key, value.data)
 					}
 				}
 			}
@@ -262,11 +272,13 @@ func main() {
 					for key, value := range m_data {
 						fmt.Printf("wind_speed_%v.label %v (speed)\n", key, value.name)
 						fmt.Printf("wind_gust_%v.label %v (gust)\n", key, value.name)
+						fmt.Printf("wind_gust_%v.draw LINE1\n", key)
+						fmt.Printf("wind_speed_%v.draw LINE1\n", key)
 					}
 				}else{
 					for key, _ := range m_data {
-						fmt.Printf("wind_speed_%v.value %v\n", key, modulesData["WindStrength"][key].data)
-						fmt.Printf("wind_gust_%v.value %v\n", key, modulesData["GustStrength"][key].data)
+						fmt.Printf("wind_speed_%v.value %.0f\n", key, modulesData["WindStrength"][key].data)
+						fmt.Printf("wind_gust_%v.value %.0f\n", key, modulesData["GustStrength"][key].data)
 					}
 				}
 			}
@@ -274,22 +286,32 @@ func main() {
 			if (configGlobal.Sensors.Rain) {
 				fmt.Println("multigraph netatmo_rain")
 				if (DisplayConfig){
-					fmt.Println("graph_title Rain info")
+					fmt.Println("graph_title Amount of rain")
 					fmt.Println("graph_vlabel mm")
 					fmt.Println("graph_scale no")
 					fmt.Println("graph_category netatmo")
 					for key, value := range m_data {
 						fmt.Printf("rain_daily_%v.label %v (daily)\n", key, value.name)
 						fmt.Printf("rain_hourly_%v.label %v (hourly)\n", key, value.name)
-						fmt.Printf("rain_daily_%v.type COUNTER\n", key)
-						fmt.Printf("rain_hourly_%v.type COUNTER\n", key)
-						fmt.Printf("rain_daily_%v.min 0\n", key)
-						fmt.Printf("rain_hourly_%v.min 0\n", key)
+						fmt.Printf("rain_%v.label %v (last rain measured)\n", key, value.name)
+						//fmt.Printf("rain_daily_%v.type DDERIVE\n", key)
+						//fmt.Printf("rain_hourly_%v.type DDERIVE\n", key)
+						//fmt.Printf("rain_%v.type DDERIVE\n", key)
+						fmt.Printf("rain_daily_%v.draw AREA\n", key)
+						fmt.Printf("rain_hourly_%v.draw AREA\n", key)
+						fmt.Printf("rain_%v.draw AREA\n", key)
+						//fmt.Printf("rain_daily_%v.draw LINE1\n", key)
+						//fmt.Printf("rain_hourly_%v.draw LINE1\n", key)
+						//fmt.Printf("rain_%v.draw LINE1\n", key)
+						//fmt.Printf("rain_daily_%v.min 0.00\n", key)
+						//fmt.Printf("rain_hourly_%v.min 0.00\n", key)
+						//fmt.Printf("rain_%v.min 0.00\n", key)
 					}
 				}else{
 					for key, _ := range m_data {
-						fmt.Printf("rain_daily_%v.value %v\n", key, modulesData["Rain1Day"][key].data)
-						fmt.Printf("rain_hourly_%v.value %v\n", key, modulesData["Rain1Hour"][key].data)
+						fmt.Printf("rain_daily_%v.value %.2f\n", key, modulesData["Rain1Day"][key].data)
+						fmt.Printf("rain_hourly_%v.value %.2f\n", key, modulesData["Rain1Hour"][key].data)
+						fmt.Printf("rain_%v.value %.2f\n", key, modulesData["Rain"][key].data)
 					}
 				}
 			}
@@ -302,7 +324,13 @@ func main() {
 					fmt.Println("graph_category netatmo")
 					for key, value := range m_data {
 						fmt.Printf("wind_angle_%v.label %v\n", key, value.name)
-						fmt.Printf("gust_angle_%v.label %v\n", key, value.name)
+						fmt.Printf("gust_angle_%v.label %v (gust)\n", key, value.name)
+						fmt.Printf("wind_angle_%v.min 0\n", key)
+						fmt.Printf("wind_angle_%v.max 360\n", key)
+						fmt.Printf("gust_angle_%v.min 0\n", key)
+						fmt.Printf("gust_angle_%v.max 360\n", key)
+						fmt.Printf("gust_angle_%v.draw LINE1\n", key)
+						fmt.Printf("wind_angle_%v.draw LINE1\n", key)
 					}
 				}else{
 					for key, _ := range m_data {
