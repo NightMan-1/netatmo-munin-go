@@ -252,6 +252,7 @@ func main() {
 					fmt.Println("graph_title Temperature")
 					fmt.Println("graph_vlabel °C")
 					fmt.Println("graph_category netatmo")
+					fmt.Println("graph_scale no")
 					for key, value := range m_data {
 						fmt.Printf("temp_%v.label %v\n", key, value.name)
 						fmt.Printf("temp_%v.draw LINE1\n", key)
